@@ -3,7 +3,6 @@
              x:Class="MyFirstAvaloniaApp.App"
              xmlns:local="using:MyFirstAvaloniaApp"
              RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
         <local:ViewLocator/>
@@ -11,5 +10,18 @@
   
     <Application.Styles>
         <FluentTheme />
+        
+        <!-- Подключаем обе темы статически -->
+        <StyleInclude Source="avares://MyFirstAvaloniaApp/Themes/LightTheme.axaml" />
+        <StyleInclude Source="avares://MyFirstAvaloniaApp/Themes/DarkTheme.axaml" />
     </Application.Styles>
+    
+    <!-- Убираем Application.Resources или оставляем пустыми -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
 </Application>

@@ -22,5 +22,11 @@ build_property.EnableGeneratedComInterfaceComImportInterop =
 [/Users/ivankostuhin/develop/dotnet/Avalonia/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/Users/ivankostuhin/develop/dotnet/Avalonia/Themes/DarkTheme.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/ivankostuhin/develop/dotnet/Avalonia/Themes/LightTheme.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/Users/ivankostuhin/develop/dotnet/Avalonia/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

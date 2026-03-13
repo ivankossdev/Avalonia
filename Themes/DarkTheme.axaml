@@ -1,0 +1,51 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- Стили для тёмной темы (класс DarkTheme на окне) -->
+    <Style Selector="Window.DarkTheme">
+        <Setter Property="Background" Value="#FF1E1E1E"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    
+    <Style Selector="Window.DarkTheme Button">
+        <Setter Property="Background" Value="#FFBB86FC"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="10,5"/>
+    </Style>
+    
+    <Style Selector="Window.DarkTheme Button:hover">
+        <Setter Property="Background" Value="#FF03DAC6"/>
+    </Style>
+    
+    <Style Selector="Window.DarkTheme Button:pressed">
+        <Setter Property="Background" Value="#FFBB86FC"/>
+        <Setter Property="Opacity" Value="0.8"/>
+    </Style>
+    
+    <Style Selector="Window.DarkTheme TextBox">
+        <Setter Property="Background" Value="#FF2D2D30"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#FF3F3F46"/>
+        <Setter Property="Padding" Value="5"/>
+    </Style>
+    
+    <Style Selector="Window.DarkTheme TextBox:focus">
+        <Setter Property="BorderBrush" Value="#FFBB86FC"/>
+    </Style>
+    
+    <Style Selector="Window.DarkTheme TextBlock">
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    
+    <Style Selector="Window.DarkTheme Rectangle">
+        <Setter Property="Fill" Value="#FF3F3F46"/>
+    </Style>
+    
+    <Style Selector="Window.DarkTheme ProgressBar">
+        <Setter Property="Background" Value="#FF3F3F46"/>
+        <Setter Property="Foreground" Value="#FFBB86FC"/>
+    </Style>
+    
+</Styles>
