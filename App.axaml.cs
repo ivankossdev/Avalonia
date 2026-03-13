@@ -1,9 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
-using Avalonia.Data.Core.Plugins;
-using System.Linq;
 using Avalonia.Markup.Xaml;
+using MyFirstAvaloniaApp.Services;
 using MyFirstAvaloniaApp.ViewModels;
 using MyFirstAvaloniaApp.Views;
 
@@ -20,28 +18,18 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
-            // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
-            DisableAvaloniaDataAnnotationValidation();
-            desktop.MainWindow = new MainWindow
-            {
-                DataContext = new MainViewModel(),
-            };
+            var mainWindow = new MainWindow();
+            var dialogService = new DialogService(mainWindow);
+            var viewModel = new MainViewModel(dialogService);
+            mainWindow.DataContext = viewModel;
+            desktop.MainWindow = mainWindow;
+        }
+        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
+        {
+            // Для мобильных/браузера аналогично, но там MainView
+            // Можно пока оставить как есть или добавить позже
         }
 
         base.OnFrameworkInitializationCompleted();
-    }
-
-    private void DisableAvaloniaDataAnnotationValidation()
-    {
-        // Get an array of plugins to remove
-        var dataValidationPluginsToRemove =
-            BindingPlugins.DataValidators.OfType<DataAnnotationsValidationPlugin>().ToArray();
-
-        // remove each entry found
-        foreach (var plugin in dataValidationPluginsToRemove)
-        {
-            BindingPlugins.DataValidators.Remove(plugin);
-        }
     }
 }

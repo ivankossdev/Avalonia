@@ -7,9 +7,9 @@
         Width="1000"
         Height="400">
 
-    <Window.DataContext>
+    <!-- <Window.DataContext>
         <vm:MainViewModel />
-    </Window.DataContext>
+    </Window.DataContext> -->
 
     <Grid>
         <Grid.ColumnDefinitions>
