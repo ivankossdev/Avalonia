@@ -18,16 +18,20 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            // Создаём главное окно
             var mainWindow = new MainWindow();
+            
+            // Создаём сервис диалогов (передаём окно)
             var dialogService = new DialogService(mainWindow);
+            
+            // Создаём ViewModel – теперь только с DialogService (ThemeService больше не нужен)
             var viewModel = new MainViewModel(dialogService);
+            
+            // Устанавливаем DataContext для окна
             mainWindow.DataContext = viewModel;
+            
+            // Назначаем главное окно приложения
             desktop.MainWindow = mainWindow;
-        }
-        else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
-        {
-            // Для мобильных/браузера аналогично, но там MainView
-            // Можно пока оставить как есть или добавить позже
         }
 
         base.OnFrameworkInitializationCompleted();

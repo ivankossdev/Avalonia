@@ -1,0 +1,53 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- Стили для светлой темы (класс LightTheme на окне) -->
+    <Style Selector="Window.LightTheme">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
+    </Style>
+    
+    <Style Selector="Window.LightTheme Button">
+        <Setter Property="Background" Value="LightBlue"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="Gray"/>
+        <Setter Property="Padding" Value="10,5"/>
+    </Style>
+    
+    <Style Selector="Window.LightTheme Button:hover">
+        <Setter Property="Background" Value="Blue"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    
+    <Style Selector="Window.LightTheme Button:pressed">
+        <Setter Property="Background" Value="DarkBlue"/>
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+    
+    <Style Selector="Window.LightTheme TextBox">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="BorderBrush" Value="Gray"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="5"/>
+    </Style>
+    
+    <Style Selector="Window.LightTheme TextBox:focus">
+        <Setter Property="BorderBrush" Value="Blue"/>
+    </Style>
+    
+    <Style Selector="Window.LightTheme TextBlock">
+        <Setter Property="Foreground" Value="Black"/>
+    </Style>
+    
+    <Style Selector="Window.LightTheme Rectangle">
+        <Setter Property="Fill" Value="LightGray"/>
+    </Style>
+    
+    <Style Selector="Window.LightTheme ProgressBar">
+        <Setter Property="Background" Value="LightGray"/>
+        <Setter Property="Foreground" Value="Blue"/>
+    </Style>
+    
+</Styles>

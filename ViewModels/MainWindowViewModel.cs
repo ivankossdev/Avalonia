@@ -21,8 +21,12 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private bool _isLoading;
 
+    [ObservableProperty]
+    private bool _isDarkTheme; // true - тёмная тема, false - светлая
+
     public IAsyncRelayCommand LoadDataCommand { get; }
     public IRelayCommand CancelCommand { get; }
+    public IRelayCommand ToggleThemeCommand { get; }
 
     public MainViewModel(IDialogService dialogService)
     {
@@ -30,6 +34,15 @@ public partial class MainViewModel : ObservableObject
 
         LoadDataCommand = new AsyncRelayCommand(LoadDataAsync, CanLoadData);
         CancelCommand = new RelayCommand(CancelLoad, () => IsLoading);
+        ToggleThemeCommand = new RelayCommand(ToggleTheme);
+
+        // Начальная тема (можно прочитать из настроек, но пока false)
+        _isDarkTheme = false;
+    }
+
+    private void ToggleTheme()
+    {
+        IsDarkTheme = !IsDarkTheme;
     }
 
     [RelayCommand]
@@ -58,7 +71,6 @@ public partial class MainViewModel : ObservableObject
 
             _cts = new CancellationTokenSource();
 
-            // Имитация длительной загрузки (3 секунды)
             await Task.Delay(3000, _cts.Token);
 
             if (!_cts.Token.IsCancellationRequested)
