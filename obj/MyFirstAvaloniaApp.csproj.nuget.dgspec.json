@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/ivan/developer/DotnetCore/MyFirstAvaloniaApp/MyFirstAvaloniaApp.csproj": {}
+    "/Users/ivankostuhin/develop/dotnet/Avalonia/MyFirstAvaloniaApp.csproj": {}
   },
   "projects": {
-    "/home/ivan/developer/DotnetCore/MyFirstAvaloniaApp/MyFirstAvaloniaApp.csproj": {
+    "/Users/ivankostuhin/develop/dotnet/Avalonia/MyFirstAvaloniaApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/ivan/developer/DotnetCore/MyFirstAvaloniaApp/MyFirstAvaloniaApp.csproj",
+        "projectUniqueName": "/Users/ivankostuhin/develop/dotnet/Avalonia/MyFirstAvaloniaApp.csproj",
         "projectName": "MyFirstAvaloniaApp",
-        "projectPath": "/home/ivan/developer/DotnetCore/MyFirstAvaloniaApp/MyFirstAvaloniaApp.csproj",
-        "packagesPath": "/home/ivan/.nuget/packages/",
-        "outputPath": "/home/ivan/developer/DotnetCore/MyFirstAvaloniaApp/obj/",
+        "projectPath": "/Users/ivankostuhin/develop/dotnet/Avalonia/MyFirstAvaloniaApp.csproj",
+        "packagesPath": "/Users/ivankostuhin/.nuget/packages/",
+        "outputPath": "/Users/ivankostuhin/develop/dotnet/Avalonia/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/ivan/.nuget/NuGet/NuGet.Config"
+          "/Users/ivankostuhin/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8"
@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -79,7 +84,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.125/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.402/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

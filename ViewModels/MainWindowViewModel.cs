@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MyFirstAvaloniaApp.Services;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,9 +9,28 @@ namespace MyFirstAvaloniaApp.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
-    // Существующий код для лога кнопок
+    private readonly IDialogService _dialogService;
+    private CancellationTokenSource? _cts;
+
     [ObservableProperty]
     private string _logText = "История нажатий:\n";
+
+    [ObservableProperty]
+    private string _loadedData = "Данные ещё не загружены";
+
+    [ObservableProperty]
+    private bool _isLoading;
+
+    public IAsyncRelayCommand LoadDataCommand { get; }
+    public IRelayCommand CancelCommand { get; }
+
+    public MainViewModel(IDialogService dialogService)
+    {
+        _dialogService = dialogService;
+
+        LoadDataCommand = new AsyncRelayCommand(LoadDataAsync, CanLoadData);
+        CancelCommand = new RelayCommand(CancelLoad, () => IsLoading);
+    }
 
     [RelayCommand]
     private void Button1() => LogText += "Нажата кнопка 1\n";
@@ -19,29 +39,13 @@ public partial class MainViewModel : ObservableObject
     private void Button2() => LogText += "Нажата кнопка 2\n";
 
     [RelayCommand]
-    private void Clear() => LogText = "История нажатий:\n";
-
-    // Новые поля для асинхронного примера
-    [ObservableProperty]
-    private string _loadedData = "Данные ещё не загружены";
-
-    [ObservableProperty]
-    private bool _isLoading;
-
-    // CancellationTokenSource для возможности отмены
-    private CancellationTokenSource? _cts;
-
-    // Асинхронная команда загрузки
-    public IAsyncRelayCommand LoadDataCommand { get; }
-
-    // Команда отмены
-    public IRelayCommand CancelCommand { get; }
-
-    public MainViewModel()
+    private async Task Clear()
     {
-        // Инициализация команд
-        LoadDataCommand = new AsyncRelayCommand(LoadDataAsync, CanLoadData);
-        CancelCommand = new RelayCommand(CancelLoad, () => IsLoading);
+        var confirmed = await _dialogService.ShowConfirmationAsync("Подтверждение", "Очистить лог?");
+        if (confirmed)
+        {
+            LogText = "История нажатий:\n";
+        }
     }
 
     private async Task LoadDataAsync()
@@ -49,25 +53,29 @@ public partial class MainViewModel : ObservableObject
         try
         {
             IsLoading = true;
-            // Обновляем состояние команд
             LoadDataCommand.NotifyCanExecuteChanged();
             CancelCommand.NotifyCanExecuteChanged();
 
-            // Создаём новый токен отмены
             _cts = new CancellationTokenSource();
 
-            // Имитация долгой загрузки (например, запрос к API)
-            await Task.Delay(3000, _cts.Token); // 3 секунды
+            // Имитация длительной загрузки (3 секунды)
+            await Task.Delay(3000, _cts.Token);
 
-            // Если отмены не было, обновляем данные
             if (!_cts.Token.IsCancellationRequested)
             {
                 LoadedData = $"Данные загружены: {DateTime.Now:T}";
+                await _dialogService.ShowInfoAsync("Успех", "Данные успешно загружены");
             }
         }
         catch (OperationCanceledException)
         {
             LoadedData = "Загрузка отменена";
+            await _dialogService.ShowInfoAsync("Информация", "Загрузка была отменена");
+        }
+        catch (Exception ex)
+        {
+            LoadedData = $"Ошибка: {ex.Message}";
+            await _dialogService.ShowErrorAsync("Ошибка", ex.Message);
         }
         finally
         {
@@ -81,8 +89,5 @@ public partial class MainViewModel : ObservableObject
 
     private bool CanLoadData() => !IsLoading;
 
-    private void CancelLoad()
-    {
-        _cts?.Cancel();
-    }
+    private void CancelLoad() => _cts?.Cancel();
 }
