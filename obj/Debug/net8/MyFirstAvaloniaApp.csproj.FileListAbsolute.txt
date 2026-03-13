@@ -73,3 +73,4 @@
 /home/ivan/developer/DotnetCore/MyFirstAvaloniaApp/obj/Debug/net8/MyFirstAvaloniaApp.pdb
 /home/ivan/developer/DotnetCore/MyFirstAvaloniaApp/obj/Debug/net8/MyFirstAvaloniaApp.genruntimeconfig.cache
 /home/ivan/developer/DotnetCore/MyFirstAvaloniaApp/obj/Debug/net8/ref/MyFirstAvaloniaApp.dll
+/home/ivan/developer/DotnetCore/MyFirstAvaloniaApp/obj/Debug/net8/MyFirstAvaloniaApp.sourcelink.json
