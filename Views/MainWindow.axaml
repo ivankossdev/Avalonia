@@ -4,14 +4,15 @@
         x:Class="MyFirstAvaloniaApp.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         Title="Avalonia Demo"
-        Width="400"
-        Height="300">
+        Width="800"
+        Height="400">
 
     <Window.DataContext>
         <vm:MainViewModel />
     </Window.DataContext>
 
     <DockPanel>
+        <!-- Первая часть: кнопки и лог -->
         <StackPanel DockPanel.Dock="Top"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
@@ -24,7 +25,7 @@
                     Command="{Binding Button2Command}"
                     Margin="5"
                     Padding="10,5"/>
-            <Button Content="Очистить"
+            <Button Content="Очистить лог"
                     Command="{Binding ClearCommand}"
                     Margin="5"
                     Padding="10,5"/>
@@ -35,6 +36,47 @@
                  AcceptsReturn="True"
                  TextWrapping="Wrap"
                  ScrollViewer.VerticalScrollBarVisibility="Auto"
-                 Margin="10"/>
+                 Margin="10"
+                 Height="100"/>
+
+        <!-- Разделитель -->
+        <Rectangle DockPanel.Dock="Top" Height="1" Fill="Gray" Margin="10,0"/>
+
+        <!-- Вторая часть: асинхронный пример -->
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Vertical"
+                    Margin="10">
+            <TextBlock Text="Асинхронная загрузка:" FontWeight="Bold" Margin="0,5"/>
+            
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <Button Content="Загрузить данные"
+                        Command="{Binding LoadDataCommand}"
+                        Margin="0,0,10,0"
+                        Padding="10,5"/>
+                
+                <Button Content="Отмена"
+                        Command="{Binding CancelCommand}"
+                        Padding="10,5"/>
+                
+                <!-- Индикатор загрузки: ProgressBar + текст -->
+                <StackPanel Orientation="Horizontal" Margin="10,0">
+                    <ProgressBar IsIndeterminate="{Binding IsLoading}"
+                                 Width="100"
+                                 Height="15"
+                                 IsVisible="{Binding IsLoading}"/>
+                    <TextBlock Text="Загрузка..."
+                               Margin="5,0,0,0"
+                               VerticalAlignment="Center"
+                               IsVisible="{Binding IsLoading}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Результат загрузки -->
+            <TextBox Text="{Binding LoadedData}"
+                     IsReadOnly="True"
+                     TextWrapping="Wrap"
+                     Margin="0,5"
+                     Height="60"/>
+        </StackPanel>
     </DockPanel>
 </Window>
