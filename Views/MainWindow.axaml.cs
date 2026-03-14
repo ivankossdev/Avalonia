@@ -34,13 +34,13 @@ public partial class MainWindow : Window
     {
         if (isDark)
         {
-            Classes.Remove("LightTheme");
+            
             Classes.Add("DarkTheme");
         }
         else
         {
             Classes.Remove("DarkTheme");
-            Classes.Add("LightTheme");
+            
         }
     }
 }

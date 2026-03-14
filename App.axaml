@@ -10,9 +10,6 @@
   
     <Application.Styles>
         <FluentTheme />
-        
-        <!-- Подключаем обе темы статически -->
-        <StyleInclude Source="avares://MyFirstAvaloniaApp/Themes/LightTheme.axaml" />
         <StyleInclude Source="avares://MyFirstAvaloniaApp/Themes/DarkTheme.axaml" />
     </Application.Styles>
     
