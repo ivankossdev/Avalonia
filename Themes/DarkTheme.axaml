@@ -8,7 +8,7 @@
     </Style>
     
     <Style Selector="Window.DarkTheme Button">
-        <Setter Property="Background" Value="#FFBB86FC"/>
+        <Setter Property="Background" Value="#ffba8667"/>
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="10,5"/>
