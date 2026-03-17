@@ -15,15 +15,18 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MyFirstAvaloniaApp
-build_property.ProjectDir = /Users/ivankostuhin/develop/dotnet/Avalonia/
+build_property.ProjectDir = /Users/ivankostuhin/develop/dotnet/MyFirstAvaloniaApp/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 
-[/Users/ivankostuhin/develop/dotnet/Avalonia/App.axaml]
+[/Users/ivankostuhin/develop/dotnet/MyFirstAvaloniaApp/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/Users/ivankostuhin/develop/dotnet/Avalonia/Themes/DarkTheme.axaml]
+[/Users/ivankostuhin/develop/dotnet/MyFirstAvaloniaApp/Themes/CustomStyles.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/Users/ivankostuhin/develop/dotnet/Avalonia/Views/MainWindow.axaml]
+[/Users/ivankostuhin/develop/dotnet/MyFirstAvaloniaApp/Themes/DarkTheme.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/ivankostuhin/develop/dotnet/MyFirstAvaloniaApp/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

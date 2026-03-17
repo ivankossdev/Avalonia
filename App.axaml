@@ -10,15 +10,7 @@
   
     <Application.Styles>
         <FluentTheme />
-        <StyleInclude Source="avares://MyFirstAvaloniaApp/Themes/DarkTheme.axaml"/>
+        <StyleInclude Source="avares://MyFirstAvaloniaApp/Themes/CustomStyles.axaml"/>
     </Application.Styles>
-    
-    <!-- Убираем Application.Resources или оставляем пустыми -->
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Application.Resources>
 
 </Application>

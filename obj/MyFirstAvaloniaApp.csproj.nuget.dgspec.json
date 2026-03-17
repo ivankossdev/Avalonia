@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ivankostuhin/develop/dotnet/Avalonia/MyFirstAvaloniaApp.csproj": {}
+    "/Users/ivankostuhin/develop/dotnet/MyFirstAvaloniaApp/MyFirstAvaloniaApp.csproj": {}
   },
   "projects": {
-    "/Users/ivankostuhin/develop/dotnet/Avalonia/MyFirstAvaloniaApp.csproj": {
+    "/Users/ivankostuhin/develop/dotnet/MyFirstAvaloniaApp/MyFirstAvaloniaApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ivankostuhin/develop/dotnet/Avalonia/MyFirstAvaloniaApp.csproj",
+        "projectUniqueName": "/Users/ivankostuhin/develop/dotnet/MyFirstAvaloniaApp/MyFirstAvaloniaApp.csproj",
         "projectName": "MyFirstAvaloniaApp",
-        "projectPath": "/Users/ivankostuhin/develop/dotnet/Avalonia/MyFirstAvaloniaApp.csproj",
+        "projectPath": "/Users/ivankostuhin/develop/dotnet/MyFirstAvaloniaApp/MyFirstAvaloniaApp.csproj",
         "packagesPath": "/Users/ivankostuhin/.nuget/packages/",
-        "outputPath": "/Users/ivankostuhin/develop/dotnet/Avalonia/obj/",
+        "outputPath": "/Users/ivankostuhin/develop/dotnet/MyFirstAvaloniaApp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/ivankostuhin/.nuget/NuGet/NuGet.Config"

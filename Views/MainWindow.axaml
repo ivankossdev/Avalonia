@@ -25,14 +25,17 @@
                         HorizontalAlignment="Center"
                         Margin="0,0,0,10">
                 <Button Content="Кнопка 1"
+                        Classes="PrimaryButton"
                         Command="{Binding Button1Command}"
                         Margin="5"
                         Padding="10,5"/>
                 <Button Content="Кнопка 2"
+                        Classes="PrimaryButton"
                         Command="{Binding Button2Command}"
                         Margin="5"
                         Padding="10,5"/>
                 <Button Content="Очистить лог"
+                        Classes="PrimaryButton"
                         Command="{Binding ClearCommand}"
                         Margin="5"
                         Padding="10,5"/>
@@ -61,11 +64,13 @@
             
             <StackPanel Orientation="Horizontal" Margin="0,5">
                 <Button Content="Загрузить данные"
+                        Classes="PrimaryButton"
                         Command="{Binding LoadDataCommand}"
                         Margin="0,0,10,0"
                         Padding="10,5"/>
                 
                 <Button Content="Отмена"
+                        Classes="PrimaryButton"
                         Command="{Binding CancelCommand}"
                         Padding="10,5"/>
                 
