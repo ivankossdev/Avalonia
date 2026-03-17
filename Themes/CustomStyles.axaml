@@ -1,0 +1,33 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Базовый стиль для кнопок PrimaryButton -->
+    <Style Selector="Button.PrimaryButton">
+        <Setter Property="Background" Value="#ffba86e9"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="15,8"/>
+        <Setter Property="Opacity" Value="1"/>
+        <!-- BoxShadow удалён, так как его нет в Button -->
+    </Style>
+
+    <!-- Состояние при наведении -->
+    <Style Selector="Button.PrimaryButton:pointerover">
+        <Setter Property="Background" Value="#ff9a5ac0"/> <!-- более тёмный оттенок -->
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+    <!-- Состояние при нажатии -->
+    <Style Selector="Button.PrimaryButton:pressed">
+        <Setter Property="Background" Value="#ff7a3a9f"/> <!-- ещё темнее -->
+        <Setter Property="Foreground" Value="White"/>
+    </Style>
+
+    <!-- Состояние отключённой кнопки -->
+    <Style Selector="Button.PrimaryButton:disabled">
+        <Setter Property="Background" Value="#80ba86e9"/> <!-- полупрозрачный -->
+        <Setter Property="Foreground" Value="#B0FFFFFF"/>
+    </Style>
+
+</Styles>
