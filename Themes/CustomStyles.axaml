@@ -1,33 +1,50 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Базовый стиль для кнопок PrimaryButton -->
+    <!-- Определяем шаблон для кнопок с классом PrimaryButton -->
     <Style Selector="Button.PrimaryButton">
-        <Setter Property="Background" Value="#ffba86e9"/>
+        <!-- Свойства по умолчанию -->
         <Setter Property="Foreground" Value="White"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="15,8"/>
         <Setter Property="Opacity" Value="1"/>
-        <!-- BoxShadow удалён, так как его нет в Button -->
+        
+        <!-- Шаблон -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="4">
+                    <ContentPresenter Name="contentPresenter"
+                                      Content="{TemplateBinding Content}"
+                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      Padding="{TemplateBinding Padding}"/>
+                </Border>
+            </ControlTemplate>
+        </Setter>
     </Style>
 
-    <!-- Состояние при наведении -->
-    <Style Selector="Button.PrimaryButton:pointerover">
-        <Setter Property="Background" Value="#ff9a5ac0"/> <!-- более тёмный оттенок -->
-        <Setter Property="Foreground" Value="White"/>
+    <!-- Базовый фон (обычное состояние) -->
+    <Style Selector="Button.PrimaryButton">
+        <Setter Property="Background" Value="#ffba86e9"/>
     </Style>
 
-    <!-- Состояние при нажатии -->
-    <Style Selector="Button.PrimaryButton:pressed">
-        <Setter Property="Background" Value="#ff7a3a9f"/> <!-- ещё темнее -->
-        <Setter Property="Foreground" Value="White"/>
+    <!-- При наведении -->
+    <Style Selector="Button.PrimaryButton:pointerover /template/ Border#border">
+        <Setter Property="Background" Value="#ff9a5ac0"/>
     </Style>
 
-    <!-- Состояние отключённой кнопки -->
-    <Style Selector="Button.PrimaryButton:disabled">
-        <Setter Property="Background" Value="#80ba86e9"/> <!-- полупрозрачный -->
-        <Setter Property="Foreground" Value="#B0FFFFFF"/>
+    <!-- При нажатии -->
+    <Style Selector="Button.PrimaryButton:pressed /template/ Border#border">
+        <Setter Property="Background" Value="#ff7a3a9f"/>
+    </Style>
+
+    <!-- Отключённое состояние -->
+    <Style Selector="Button.PrimaryButton:disabled /template/ Border#border">
+        <Setter Property="Background" Value="#80ba86e9"/>
     </Style>
 
 </Styles>
