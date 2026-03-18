@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MyFirstAvaloniaApp.Models;
 using MyFirstAvaloniaApp.Services;
-using System;
-using System.Threading;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace MyFirstAvaloniaApp.ViewModels;
@@ -10,84 +10,76 @@ namespace MyFirstAvaloniaApp.ViewModels;
 public partial class MainViewModel : ObservableObject
 {
     private readonly IDialogService _dialogService;
-    private CancellationTokenSource? _cts;
+    private readonly INoteService _noteService;
 
     [ObservableProperty]
-    private string _logText = "История нажатий:\n";
+    private ObservableCollection<Note> _notes = new();
 
     [ObservableProperty]
-    private string _loadedData = "Данные ещё не загружены";
+    private Note? _selectedNote;
 
     [ObservableProperty]
     private bool _isLoading;
 
-    public IAsyncRelayCommand LoadDataCommand { get; }
-    public IRelayCommand CancelCommand { get; }
-    
+    public IAsyncRelayCommand LoadNotesCommand { get; }
+    public IAsyncRelayCommand AddNoteCommand { get; }
+    public IAsyncRelayCommand<Note> EditNoteCommand { get; }
+    public IAsyncRelayCommand<Note> DeleteNoteCommand { get; }
 
-    public MainViewModel(IDialogService dialogService)
+    public MainViewModel(IDialogService dialogService, INoteService noteService)
     {
         _dialogService = dialogService;
+        _noteService = noteService;
 
-        LoadDataCommand = new AsyncRelayCommand(LoadDataAsync, CanLoadData);
-        CancelCommand = new RelayCommand(CancelLoad, () => IsLoading);
+        LoadNotesCommand = new AsyncRelayCommand(LoadNotesAsync);
+        AddNoteCommand = new AsyncRelayCommand(AddNoteAsync);
+        EditNoteCommand = new AsyncRelayCommand<Note>(EditNoteAsync);
+        DeleteNoteCommand = new AsyncRelayCommand<Note>(DeleteNoteAsync);
+
+        // Загружаем заметки при старте
+        LoadNotesCommand.Execute(null);
     }
 
-    [RelayCommand]
-    private void Button1() => LogText += "Нажата кнопка 1\n";
-
-    [RelayCommand]
-    private void Button2() => LogText += "Нажата кнопка 2\n";
-
-    [RelayCommand]
-    private async Task Clear()
+    private async Task LoadNotesAsync()
     {
-        var confirmed = await _dialogService.ShowConfirmationAsync("Подтверждение", "Очистить лог?");
+        IsLoading = true;
+        var notes = await _noteService.GetNotesAsync();
+        Notes.Clear();
+        foreach (var note in notes)
+            Notes.Add(note);
+        IsLoading = false;
+    }
+
+    private async Task AddNoteAsync()
+    {
+        // Создаём новую заметку
+        var newNote = new Note { Title = "Новая заметка", Content = "", CreatedAt = System.DateTime.Now };
+        var id = await _noteService.SaveNoteAsync(newNote);
+        newNote.Id = id;
+        Notes.Insert(0, newNote); // Добавляем в начало списка
+        SelectedNote = newNote;
+        // Можно сразу открыть редактирование (опционально)
+    }
+
+    private async Task EditNoteAsync(Note? note)
+    {
+        if (note == null) return;
+
+        // Здесь можно открыть диалог редактирования
+        // Пока просто покажем информационное сообщение
+        await _dialogService.ShowInfoAsync("Редактирование", $"Редактирование заметки: {note.Title}");
+    }
+
+    private async Task DeleteNoteAsync(Note? note)
+    {
+        if (note == null) return;
+
+        var confirmed = await _dialogService.ShowConfirmationAsync("Подтверждение", 
+            $"Удалить заметку \"{note.Title}\"?");
         if (confirmed)
         {
-            LogText = "История нажатий:\n";
+            await _noteService.DeleteNoteAsync(note.Id);
+            Notes.Remove(note);
         }
     }
-
-    private async Task LoadDataAsync()
-    {
-        try
-        {
-            IsLoading = true;
-            LoadDataCommand.NotifyCanExecuteChanged();
-            CancelCommand.NotifyCanExecuteChanged();
-
-            _cts = new CancellationTokenSource();
-
-            await Task.Delay(3000, _cts.Token);
-
-            if (!_cts.Token.IsCancellationRequested)
-            {
-                LoadedData = $"Данные загружены: {DateTime.Now:T}";
-                await _dialogService.ShowInfoAsync("Успех", "Данные успешно загружены");
-            }
-        }
-        catch (OperationCanceledException)
-        {
-            LoadedData = "Загрузка отменена";
-            await _dialogService.ShowInfoAsync("Информация", "Загрузка была отменена");
-        }
-        catch (Exception ex)
-        {
-            LoadedData = $"Ошибка: {ex.Message}";
-            await _dialogService.ShowErrorAsync("Ошибка", ex.Message);
-        }
-        finally
-        {
-            IsLoading = false;
-            _cts?.Dispose();
-            _cts = null;
-            LoadDataCommand.NotifyCanExecuteChanged();
-            CancelCommand.NotifyCanExecuteChanged();
-        }
-    }
-
-    private bool CanLoadData() => !IsLoading;
-
-    private void CancelLoad() => _cts?.Cancel();
 }
