@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 using MyFirstAvaloniaApp.Services;
 using MyFirstAvaloniaApp.ViewModels;
 using MyFirstAvaloniaApp.Views;
+using System.Threading.Tasks; // <-- добавьте эту строку
 
 namespace MyFirstAvaloniaApp;
 
@@ -18,19 +19,17 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            // Создаём главное окно
             var mainWindow = new MainWindow();
             
-            // Создаём сервис диалогов (передаём окно)
             var dialogService = new DialogService(mainWindow);
+            var noteService = new SqliteNoteService();
             
-            // Создаём ViewModel – теперь только с DialogService (ThemeService больше не нужен)
-            var viewModel = new MainViewModel(dialogService);
+            // Инициализация базы данных (синхронно для простоты)
+            Task.Run(async () => await noteService.InitializeDatabaseAsync()).Wait();
             
-            // Устанавливаем DataContext для окна
+            var viewModel = new MainViewModel(dialogService, noteService);
+            
             mainWindow.DataContext = viewModel;
-            
-            // Назначаем главное окно приложения
             desktop.MainWindow = mainWindow;
         }
 
