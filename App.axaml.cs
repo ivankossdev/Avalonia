@@ -4,7 +4,7 @@ using Avalonia.Markup.Xaml;
 using MyFirstAvaloniaApp.Services;
 using MyFirstAvaloniaApp.ViewModels;
 using MyFirstAvaloniaApp.Views;
-using System.Threading.Tasks; // <-- добавьте эту строку
+using System.Threading.Tasks; 
 
 namespace MyFirstAvaloniaApp;
 
