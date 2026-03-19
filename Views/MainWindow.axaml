@@ -4,7 +4,7 @@
         x:Class="MyFirstAvaloniaApp.Views.MainWindow"
         x:DataType="vm:MainViewModel"
         Title="Заметки"
-        Width="800"
+        Width="1000"
         Height="400">
 
     <Grid>
@@ -14,10 +14,20 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <!-- Левая колонка: пустая (можно удалить, если не нужна) -->
+        <!-- Левая колонка: детали выбранной заметки -->
         <DockPanel Grid.Column="0" Margin="10">
-            <!-- Здесь можно разместить что-то ещё, но оставим пустым -->
-            <TextBlock Text="Левая колонка (можно использовать для доп. информации)" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock DockPanel.Dock="Top" Text="Детали заметки:" FontWeight="Bold" Margin="0,0,0,10"/>
+            
+            <StackPanel>
+                <TextBlock Text="Заголовок:" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding SelectedNote?.Title}" Margin="0,0,0,10"/>
+                
+                <TextBlock Text="Содержание:" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding SelectedNote?.Content}" TextWrapping="Wrap" Margin="0,0,0,10"/>
+                
+                <TextBlock Text="Дата создания:" FontWeight="SemiBold"/>
+                <TextBlock Text="{Binding SelectedNote?.CreatedAt, StringFormat='dd.MM.yyyy HH:mm'}" Margin="0,0,0,10"/>
+            </StackPanel>
         </DockPanel>
 
         <!-- Вертикальный разделитель -->
@@ -27,7 +37,7 @@
                    Margin="0,10"
                    HorizontalAlignment="Center"/>
 
-        <!-- Правая колонка: заметки -->
+        <!-- Правая колонка: список заметок -->
         <StackPanel Grid.Column="2"
                     Orientation="Vertical"
                     Margin="10">
@@ -45,7 +55,6 @@
                              Margin="10,0"/>
             </StackPanel>
 
-            <!-- Список заметок -->
             <ListBox ItemsSource="{Binding Notes}"
                      SelectedItem="{Binding SelectedNote}"
                      Height="200"
@@ -60,7 +69,6 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <!-- Кнопки для выбранной заметки -->
             <StackPanel Orientation="Horizontal" Margin="0,5" HorizontalAlignment="Center">
                 <Button Content="Редактировать"
                         Command="{Binding EditNoteCommand}"
