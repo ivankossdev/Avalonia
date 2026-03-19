@@ -1,0 +1,26 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:MyFirstAvaloniaApp.ViewModels"
+        x:Class="MyFirstAvaloniaApp.Views.EditNoteWindow"
+        x:DataType="vm:EditNoteViewModel"
+        Title="Редактирование заметки"
+        Width="400"
+        Height="300"
+        WindowStartupLocation="CenterOwner">
+
+    <StackPanel Margin="10" Spacing="10">
+        <TextBlock Text="Заголовок:"/>
+        <TextBox Text="{Binding Title}"/>
+
+        <TextBlock Text="Содержание:"/>
+        <TextBox Text="{Binding Content}"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 Height="100"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+            <Button Content="OK" Command="{Binding SaveCommand}" Padding="15,5"/>
+            <Button Content="Отмена" Command="{Binding CancelCommand}" Padding="15,5"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

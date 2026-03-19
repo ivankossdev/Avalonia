@@ -87,7 +87,6 @@ public class SqliteNoteService : INoteService
 
         if (note.Id == 0)
         {
-            // Вставка новой заметки
             var insertCmd = connection.CreateCommand();
             insertCmd.CommandText = @"
                 INSERT INTO Notes (Title, Content, CreatedAt)
@@ -102,7 +101,6 @@ public class SqliteNoteService : INoteService
         }
         else
         {
-            // Обновление существующей
             var updateCmd = connection.CreateCommand();
             updateCmd.CommandText = @"
                 UPDATE Notes

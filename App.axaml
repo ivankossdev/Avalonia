@@ -10,6 +10,8 @@
   
     <Application.Styles>
         <FluentTheme />
+        <!-- Если есть файлы стилей, подключите их здесь -->
+        <!-- <StyleInclude Source="avares://MyFirstAvaloniaApp/Themes/CustomStyles.axaml"/> -->
     </Application.Styles>
 
 </Application>

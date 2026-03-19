@@ -4,7 +4,7 @@ using Avalonia.Markup.Xaml;
 using MyFirstAvaloniaApp.Services;
 using MyFirstAvaloniaApp.ViewModels;
 using MyFirstAvaloniaApp.Views;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 
 namespace MyFirstAvaloniaApp;
 
@@ -27,7 +27,7 @@ public partial class App : Application
             // Инициализация базы данных (синхронно для простоты)
             Task.Run(async () => await noteService.InitializeDatabaseAsync()).Wait();
             
-            var viewModel = new MainViewModel(dialogService, noteService);
+            var viewModel = new MainViewModel(dialogService, noteService, mainWindow);
             
             mainWindow.DataContext = viewModel;
             desktop.MainWindow = mainWindow;

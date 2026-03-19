@@ -4,7 +4,6 @@ using Avalonia.Controls;
 using Avalonia.Layout;
 using Avalonia.Media;
 
-
 namespace MyFirstAvaloniaApp.Services;
 
 public class DialogService : IDialogService
@@ -49,15 +48,14 @@ public class DialogService : IDialogService
             }
         };
 
-        // Обработка нажатия кнопок
         foreach (var child in ((StackPanel)((StackPanel)dialog.Content).Children[1]).Children)
         {
             if (child is Button btn)
             {
                 btn.Click += (s, e) =>
                 {
-                    var result = (bool?)btn.Tag; // Используем bool? чтобы избежать предупреждения
-                    dialog.Close(result ?? false);
+                    var result = (bool?)btn.Tag;
+                    dialog.Close(result);
                 };
             }
         }
