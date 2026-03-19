@@ -3,11 +3,30 @@
         xmlns:vm="using:MyFirstAvaloniaApp.ViewModels"
         x:Class="MyFirstAvaloniaApp.Views.MainWindow"
         x:DataType="vm:MainViewModel"
-        Title="Avalonia Demo"
-        Width="1000"
+        Title="Заметки"
+        Width="800"
         Height="400">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Левая колонка: пустая (можно удалить, если не нужна) -->
+        <DockPanel Grid.Column="0" Margin="10">
+            <!-- Здесь можно разместить что-то ещё, но оставим пустым -->
+            <TextBlock Text="Левая колонка (можно использовать для доп. информации)" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </DockPanel>
+
+        <!-- Вертикальный разделитель -->
+        <Rectangle Grid.Column="1"
+                   Width="1"
+                   Fill="Gray"
+                   Margin="0,10"
+                   HorizontalAlignment="Center"/>
+
         <!-- Правая колонка: заметки -->
         <StackPanel Grid.Column="2"
                     Orientation="Vertical"
@@ -20,17 +39,17 @@
                         Margin="0,0,10,0"
                         Padding="10,5"/>
                 <ProgressBar IsIndeterminate="True"
-                            Width="100"
-                            Height="15"
-                            IsVisible="{Binding IsLoading}"
-                            Margin="10,0"/>
+                             Width="100"
+                             Height="15"
+                             IsVisible="{Binding IsLoading}"
+                             Margin="10,0"/>
             </StackPanel>
 
             <!-- Список заметок -->
             <ListBox ItemsSource="{Binding Notes}"
-                    SelectedItem="{Binding SelectedNote}"
-                    Height="200"
-                    Margin="0,5">
+                     SelectedItem="{Binding SelectedNote}"
+                     Height="200"
+                     Margin="0,5">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Spacing="5">

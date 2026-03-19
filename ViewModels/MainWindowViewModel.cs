@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using MyFirstAvaloniaApp.Models;
 using MyFirstAvaloniaApp.Services;
+using MyFirstAvaloniaApp.Views;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ public partial class MainViewModel : ObservableObject
 {
     private readonly IDialogService _dialogService;
     private readonly INoteService _noteService;
+    private readonly MainWindow _mainWindow; // ссылка на главное окно для открытия диалогов
 
     [ObservableProperty]
     private ObservableCollection<Note> _notes = new();
@@ -26,10 +28,11 @@ public partial class MainViewModel : ObservableObject
     public IAsyncRelayCommand<Note> EditNoteCommand { get; }
     public IAsyncRelayCommand<Note> DeleteNoteCommand { get; }
 
-    public MainViewModel(IDialogService dialogService, INoteService noteService)
+    public MainViewModel(IDialogService dialogService, INoteService noteService, MainWindow mainWindow)
     {
         _dialogService = dialogService;
         _noteService = noteService;
+        _mainWindow = mainWindow;
 
         LoadNotesCommand = new AsyncRelayCommand(LoadNotesAsync);
         AddNoteCommand = new AsyncRelayCommand(AddNoteAsync);
@@ -52,29 +55,61 @@ public partial class MainViewModel : ObservableObject
 
     private async Task AddNoteAsync()
     {
-        // Создаём новую заметку
         var newNote = new Note { Title = "Новая заметка", Content = "", CreatedAt = System.DateTime.Now };
         var id = await _noteService.SaveNoteAsync(newNote);
         newNote.Id = id;
-        Notes.Insert(0, newNote); // Добавляем в начало списка
+        Notes.Insert(0, newNote);
         SelectedNote = newNote;
-        // Можно сразу открыть редактирование (опционально)
     }
 
     private async Task EditNoteAsync(Note? note)
     {
         if (note == null) return;
 
-        // Здесь можно открыть диалог редактирования
-        // Пока просто покажем информационное сообщение
-        await _dialogService.ShowInfoAsync("Редактирование", $"Редактирование заметки: {note.Title}");
+        // Создаём копию заметки для редактирования
+        var editCopy = new Note
+        {
+            Id = note.Id,
+            Title = note.Title,
+            Content = note.Content,
+            CreatedAt = note.CreatedAt
+        };
+
+        var editVM = new EditNoteViewModel(editCopy);
+        var editWindow = new EditNoteWindow
+        {
+            DataContext = editVM
+        };
+
+        editVM.CloseAction = (result) =>
+        {
+            if (result)
+            {
+                // Сохраняем изменения в оригинальную заметку
+                note.Title = editCopy.Title;
+                note.Content = editCopy.Content;
+
+                // Обновляем заметку в БД
+                Task.Run(async () => await _noteService.SaveNoteAsync(note));
+
+                // Обновляем элемент в коллекции (чтобы UI обновился)
+                var index = Notes.IndexOf(note);
+                if (index >= 0)
+                {
+                    Notes[index] = note; // перезапись элемента вызывает обновление списка
+                }
+            }
+            editWindow.Close();
+        };
+
+        await editWindow.ShowDialog(_mainWindow);
     }
 
     private async Task DeleteNoteAsync(Note? note)
     {
         if (note == null) return;
 
-        var confirmed = await _dialogService.ShowConfirmationAsync("Подтверждение", 
+        var confirmed = await _dialogService.ShowConfirmationAsync("Подтверждение",
             $"Удалить заметку \"{note.Title}\"?");
         if (confirmed)
         {
