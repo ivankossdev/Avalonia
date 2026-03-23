@@ -11,4 +11,7 @@ public interface INoteService
     Task<Note?> GetNoteAsync(int id);
     Task<int> SaveNoteAsync(Note note);
     Task<int> DeleteNoteAsync(int id);
+    // В INoteService.cs
+    Task ExportToXmlAsync(string filePath);
+    Task ImportFromXmlAsync(string filePath);
 }

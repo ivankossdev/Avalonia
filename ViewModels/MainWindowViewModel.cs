@@ -1,10 +1,14 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+﻿using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using MyFirstAvaloniaApp.Models;
 using MyFirstAvaloniaApp.Services;
 using MyFirstAvaloniaApp.Views;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
 
 namespace MyFirstAvaloniaApp.ViewModels;
 
@@ -28,6 +32,9 @@ public partial class MainViewModel : ObservableObject
     public IAsyncRelayCommand<Note> EditNoteCommand { get; }
     public IAsyncRelayCommand<Note> DeleteNoteCommand { get; }
 
+    public IAsyncRelayCommand ExportNotesCommand { get; } = null!;
+    public IAsyncRelayCommand ImportNotesCommand { get; } = null!;
+
     public MainViewModel(IDialogService dialogService, INoteService noteService, MainWindow mainWindow)
     {
         _dialogService = dialogService;
@@ -39,7 +46,6 @@ public partial class MainViewModel : ObservableObject
         EditNoteCommand = new AsyncRelayCommand<Note>(EditNoteAsync);
         DeleteNoteCommand = new AsyncRelayCommand<Note>(DeleteNoteAsync);
 
-        // Загружаем заметки при старте
         LoadNotesCommand.Execute(null);
     }
 
@@ -115,6 +121,71 @@ public partial class MainViewModel : ObservableObject
         {
             await _noteService.DeleteNoteAsync(note.Id);
             Notes.Remove(note);
+        }
+    }
+    public async Task ExportNotesAsync()
+    {
+        var topLevel = TopLevel.GetTopLevel(_mainWindow);
+        if (topLevel == null) return;
+
+        var file = await topLevel.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+        {
+            Title = "Экспорт заметок",
+            SuggestedFileName = "notes.xml",
+            DefaultExtension = "xml",
+            FileTypeChoices = new[]
+            {
+                new FilePickerFileType("XML файлы")
+                {
+                    Patterns = new[] { "*.xml" }
+                }
+            }
+        });
+
+        if (file == null) return;
+
+        try
+        {
+            await _noteService.ExportToXmlAsync(file.Path.AbsolutePath);
+            await _dialogService.ShowInfoAsync("Экспорт", "Заметки успешно экспортированы.");
+        }
+        catch (Exception ex)
+        {
+            await _dialogService.ShowErrorAsync("Ошибка экспорта", ex.Message);
+        }
+    }
+
+    public async Task ImportNotesAsync()
+    {
+        var topLevel = TopLevel.GetTopLevel(_mainWindow);
+        if (topLevel == null) return;
+
+        var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+        {
+            Title = "Импорт заметок",
+            AllowMultiple = false,
+            FileTypeFilter = new[]
+            {
+                new FilePickerFileType("XML файлы")
+                {
+                    Patterns = new[] { "*.xml" }
+                }
+            }
+        });
+
+        if (files == null || files.Count == 0) return;
+
+        var file = files[0];
+
+        try
+        {
+            await _noteService.ImportFromXmlAsync(file.Path.AbsolutePath);
+            await LoadNotesAsync(); // обновляем список
+            await _dialogService.ShowInfoAsync("Импорт", "Заметки успешно импортированы.");
+        }
+        catch (Exception ex)
+        {
+            await _dialogService.ShowErrorAsync("Ошибка импорта", ex.Message);
         }
     }
 }

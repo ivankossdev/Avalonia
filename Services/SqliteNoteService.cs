@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using MyFirstAvaloniaApp.Models;
+using System.Xml.Linq; using System.IO; 
+using System.Linq; 
+
+//using System.Threading.Tasks;
 
 namespace MyFirstAvaloniaApp.Services;
 
@@ -126,4 +130,50 @@ public class SqliteNoteService : INoteService
 
         return await deleteCmd.ExecuteNonQueryAsync();
     }
+// В SqliteNoteService.cs
+public async Task ExportToXmlAsync(string filePath)
+{
+    var notes = await GetNotesAsync();
+    var doc = new XDocument(
+        new XElement("Notes",
+            notes.Select(n =>
+                new XElement("Note",
+                    new XElement("Id", n.Id),
+                    new XElement("Title", n.Title),
+                    new XElement("Content", n.Content),
+                    new XElement("CreatedAt", n.CreatedAt.ToString("o")) // ISO 8601
+                )
+            )
+        )
+    );
+    await Task.Run(() => doc.Save(filePath));
+}
+
+public async Task ImportFromXmlAsync(string filePath)
+{
+    XDocument doc;
+    try
+    {
+        doc = XDocument.Load(filePath);
+    }
+    catch (Exception ex)
+    {
+        throw new InvalidOperationException($"Ошибка чтения XML: {ex.Message}");
+    }
+
+    var notesToAdd = doc.Descendants("Note").Select(x => new Note
+    {
+        // Id игнорируем, база назначит новый
+        Title = x.Element("Title")?.Value ?? "Без названия",
+        Content = x.Element("Content")?.Value ?? "",
+        CreatedAt = x.Element("CreatedAt")?.Value != null
+            ? DateTime.Parse(x.Element("CreatedAt")!.Value)
+            : DateTime.Now
+    }).ToList();
+
+    foreach (var note in notesToAdd)
+    {
+        await SaveNoteAsync(note); // сохраняем, Id будет присвоен
+    }
+}
 }

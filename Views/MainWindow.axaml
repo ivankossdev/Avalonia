@@ -48,12 +48,16 @@
                         Command="{Binding AddNoteCommand}"
                         Margin="0,0,10,0"
                         Padding="10,5"/>
+                <Button Content="Экспорт" Command="{Binding ExportNotesAsync}" Margin="0,0,10,0" Padding="10,5"/>
+                <Button Content="Импорт" Command="{Binding ImportNotesAsync}" Padding="10,5"/>
+
                 <ProgressBar IsIndeterminate="True"
                              Width="100"
                              Height="15"
                              IsVisible="{Binding IsLoading}"
                              Margin="10,0"/>
             </StackPanel>
+
 
             <ListBox ItemsSource="{Binding Notes}"
                      SelectedItem="{Binding SelectedNote}"
