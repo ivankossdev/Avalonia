@@ -6,8 +6,6 @@ using MyFirstAvaloniaApp.Models;
 using System.Xml.Linq; using System.IO; 
 using System.Linq; 
 
-//using System.Threading.Tasks;
-
 namespace MyFirstAvaloniaApp.Services;
 
 public class SqliteNoteService : INoteService
@@ -130,7 +128,7 @@ public class SqliteNoteService : INoteService
 
         return await deleteCmd.ExecuteNonQueryAsync();
     }
-// В SqliteNoteService.cs
+
 public async Task ExportToXmlAsync(string filePath)
 {
     var notes = await GetNotesAsync();
